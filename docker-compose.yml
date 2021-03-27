@@ -72,7 +72,6 @@ services:
 
     depends_on:
       - redis
-      - postgres
     networks:
       - app-network
       - tap-network
@@ -103,20 +102,6 @@ services:
     networks:
       - app-network
       - socket-network
-
-  postgres:
-    container_name: postgres
-    image: postgres
-    ports:
-      - "5433:5432"
-    volumes:
-        - ${DATA_PATH_HOST}/postgres:/data
-    environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - app-network
 
   socketio:
     container_name: socketio
@@ -172,8 +157,6 @@ networks:
 
 volumes:
   app:
-    driver: local
-  postgres:
     driver: local
   redis:
     driver: local
