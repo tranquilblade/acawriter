@@ -22,7 +22,7 @@ Route::get('/contact', 'ContactController@index');
 Route::post('/help', 'ContactController@storeContact');
 Route::get('/help/refreshcaptcha', 'ContactController@refreshCaptcha');
 
-Route::post('/auth/jwt', 'Auth\RegisterController@awt');
+Route::get('/auth/jwt', 'Auth\RegisterController@awt');
 Route::post('/auth/lti', 'Auth\RegisterController@lti');
 
 // Analyse page

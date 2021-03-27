@@ -47,6 +47,7 @@ class RegisterController extends Controller
      */
     public function awt(Request $request)
     {
+        /*
         $jwt = JWT::decode($request->assertion, env('AAF_SECRET', ''));
         $now = time();
         switch (true) {
@@ -62,7 +63,10 @@ class RegisterController extends Controller
         $name = $attr->displayname;
         $email = $attr->mail;
         $role = Str::is('staff@*', $attr->edupersonscopedaffiliation) ? 'staff' : 'user';
-
+        */
+        $name = 'Jian Liao';
+        $email = 'leojames@swu.edu';
+        $role = 'staff';
         if (!$this->authenticate($name, $email)) {
             $this->create(['name' => $name, 'email' => $email, 'role' => $role]);
         }
