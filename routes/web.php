@@ -24,6 +24,8 @@ Route::get('/help/refreshcaptcha', 'ContactController@refreshCaptcha');
 
 Route::get('/auth/jwt', 'Auth\RegisterController@awt');
 Route::post('/auth/lti', 'Auth\RegisterController@lti');
+Route::get('/auth/register', 'Auth\RegisterController@register')->name('auth.register');
+Route::post('/auth/registerUser', 'Auth\RegisterController@registerUser')->name('auth.registerUser');
 
 // Analyse page
 Route::get('/analyse/{code}', 'AnalyseController@index');
