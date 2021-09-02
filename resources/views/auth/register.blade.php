@@ -8,7 +8,7 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}" autocomplete="off">
+                    <form class="form-horizontal" method="POST" action="{{ route('auth.registerUser') }}" autocomplete="off">
                         {{ csrf_field() }}
 
                         <div class="form-group">

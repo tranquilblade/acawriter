@@ -72,7 +72,6 @@ services:
 
     depends_on:
       - redis
-      - postgres
     networks:
       - app-network
       - tap-network
@@ -104,20 +103,6 @@ services:
       - app-network
       - socket-network
 
-  postgres:
-    container_name: postgres
-    image: postgres
-    ports:
-      - "5433:5432"
-    volumes:
-        - ${DATA_PATH_HOST}/postgres:/data
-    environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - app-network
-
   socketio:
     container_name: socketio
     image: socketio
@@ -140,6 +125,13 @@ services:
       ATHANOR_URL: ${ATHANOR_URL}
       TAP_HOSTS: ${TAP_HOSTS}
       TAP_SECRET: ${TAP_SECRET}
+      JAVA_OPTS: '-Xmx1024m -Xms1024m -XX:MaxPermSize=2048m'
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 100M
     ports:
       - '9000:9000'
     networks:
@@ -165,8 +157,6 @@ networks:
 
 volumes:
   app:
-    driver: local
-  postgres:
     driver: local
   redis:
     driver: local

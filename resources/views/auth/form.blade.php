@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary">
-                    Login
+                    Sign In
                 </button>
             </div>
             <div class="col-md-6">
@@ -44,7 +44,18 @@
             </div>
         </div>
         @else
-        <button type="submit" class="btn btn-primary">Log in</button>
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">
+                        Sign In
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-link" href="{{ route('auth.register') }}">
+                        No account?
+                    </a>
+                </div>
+            </div>
         @endif
     </div>
 

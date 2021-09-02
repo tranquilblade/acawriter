@@ -47,6 +47,7 @@ class RegisterController extends Controller
      */
     public function awt(Request $request)
     {
+        /*
         $jwt = JWT::decode($request->assertion, env('AAF_SECRET', ''));
         $now = time();
         switch (true) {
@@ -62,7 +63,10 @@ class RegisterController extends Controller
         $name = $attr->displayname;
         $email = $attr->mail;
         $role = Str::is('staff@*', $attr->edupersonscopedaffiliation) ? 'staff' : 'user';
-
+        */
+        $name = 'Jian Liao';
+        $email = 'leojames@swu.edu';
+        $role = 'staff';
         if (!$this->authenticate($name, $email)) {
             $this->create(['name' => $name, 'email' => $email, 'role' => $role]);
         }
@@ -171,6 +175,43 @@ class RegisterController extends Controller
     }
 
     /**
+     * Create a new user instance after registration.
+     *
+     * @param string $name
+     * @param string $email
+     * @param string $role
+     *
+     * @return \App\User
+     */
+    protected function registerUser(Request $request)
+    {
+        $name = $request->post('name') ? $request->post('name') : null;
+        $email = $request->post('email') ? $request->post('email') : null;
+        $password = $request->post('password') ? $request->post('password')  : ' ';
+        $role = 'user';
+
+        if (empty($name) || empty($email)) {
+            $error = 'Please input name and email.';
+            return redirect()->to('/')->withErrors([$error]);
+        }
+
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
+        ]);
+        Auth::login($user);
+
+        $message = "New user created";
+        $msg = 'login';
+        event(new OperationLog($user, $message));
+        event(new UserRegistered($user, $role));
+        event(new UserLog($user, $msg)); // logs activity
+
+        return redirect()->intended('/');
+    }
+
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param string $name
@@ -219,6 +260,11 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:10', 'strong_password', 'confirmed'],
         ]);
+    }
+
+    public function register()
+    {
+        return view('auth.register');
     }
 
 }

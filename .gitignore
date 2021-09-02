@@ -19,3 +19,8 @@ yarn-error.log
 /.vscode
 ssh.bat
 /.acawriter
+.DS_Store
+acawriter.crt
+acawriter.key
+ca.ssl.indexnl.com.crt
+logfile
